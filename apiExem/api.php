@@ -39,6 +39,14 @@ if(checkToken($_POST['token'])){
       file_put_contents('test2.txt', json_encode($items));
       echo json_encode($items);
     }
+    // TODO: tours/hotels
+    if($_POST['param'] == 'getTours'){
+        $items = [];
+        $countryName = $_POST['country'];
+        $cityName = $_POST['city'];
+        
+        $res = mysql_query("select * from /*tours*/");
+    }
 
 }else
     echo '<h1>Gonduras</h1>';
