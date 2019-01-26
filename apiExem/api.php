@@ -12,7 +12,7 @@ if(checkToken($_POST['token'])){
         while ($row = mysql_fetch_array($res, MYSQL_ASSOC)){
             $items[] = new Country($row['id'], $row['countryName']);
         }
-        file_put_contents('test.txt', json_encode($items));
+        // file_put_contents('test.txt', json_encode($items));
         echo json_encode($items);
     }
     if($_POST['param'] == 'insCountries'){
@@ -36,16 +36,34 @@ if(checkToken($_POST['token'])){
       while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
         $items[] = new City($row['id'], $row['cityName']);
       }
-      file_put_contents('test2.txt', json_encode($items));
+      // file_put_contents('test2.txt', json_encode($items));
       echo json_encode($items);
     }
-    // TODO: tours/hotels
-    if($_POST['param'] == 'getTours'){
+    // Hotels
+    if($_POST['param'] == 'getHotels'){
         $items = [];
         $countryName = $_POST['country'];
         $cityName = $_POST['city'];
-        
-        $res = mysql_query("select * from /*tours*/");
+
+        $res = mysql_query("
+          select h.id, hotelName, stars, cost, info
+          from hotels as h
+          join countries on countries.id = h.countryId
+          join cities on cities.id = h.cityId
+          where countries.countryName = '$countryName'
+          and cities.cityName = '$cityName'");
+
+        while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
+          $items[] = new Hotel(
+            $row['id'],
+            $row['hotelName'],
+            $row['stars'],
+            $row['cost'],
+            $row['info']
+          );
+        }
+        // file_put_contents('test3.txt', json_encode($items));
+        echo json_encode($items);
     }
 
 }else
