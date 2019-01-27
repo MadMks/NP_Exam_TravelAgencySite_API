@@ -12,7 +12,8 @@ if(checkToken($_POST['token'])){
         $res = mysql_query('
         select distinct c.id, c.countryName
         from countries as c
-        join cities on cities.countryId = c.id');
+        join cities on cities.countryId = c.id
+        join hotels on hotels.countryId = c.id');
         while ($row = mysql_fetch_array($res, MYSQL_ASSOC)){
             $items[] = new Country($row['id'], $row['countryName']);
         }
