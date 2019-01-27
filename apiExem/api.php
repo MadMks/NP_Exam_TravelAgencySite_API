@@ -9,7 +9,10 @@ if(checkToken($_POST['token'])){
     if($_POST['param'] == 'getCountries'){
         $items = [];
         // TODO вернуть только те, у которых есть города.
-        $res = mysql_query('select * from countries');
+        $res = mysql_query('
+        select distinct c.id, c.countryName
+        from countries as c
+        join cities on cities.countryId = c.id');
         while ($row = mysql_fetch_array($res, MYSQL_ASSOC)){
             $items[] = new Country($row['id'], $row['countryName']);
         }
