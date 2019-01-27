@@ -8,6 +8,7 @@ if(checkToken($_POST['token'])){
     // Country
     if($_POST['param'] == 'getCountries'){
         $items = [];
+        // TODO вернуть только те, у которых есть города.
         $res = mysql_query('select * from countries');
         while ($row = mysql_fetch_array($res, MYSQL_ASSOC)){
             $items[] = new Country($row['id'], $row['countryName']);
@@ -29,8 +30,10 @@ if(checkToken($_POST['token'])){
     if ($_POST['param'] == 'getCities') {
       $items = [];
       $countryName = $_POST['country'];
-      $res = mysql_query("select c.id, c.cityName from cities as c
+      // вернуть только те, у которых есть отели.
+      $res = mysql_query("select distinct c.id, c.cityName from cities as c
         join countries on countries.id = c.countryId
+        join hotels on hotels.cityId = c.id
         where countries.countryName = '$countryName'");
 
       while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
