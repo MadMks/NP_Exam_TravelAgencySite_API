@@ -72,6 +72,23 @@ if(checkToken($_POST['token'])){
         // file_put_contents('test3.txt', json_encode($items));
         echo json_encode($items);
     }
+    // Register
+    // TODO Register
+    if ($_POST['param'] == 'register') {
+      $items = json_decode($_POST['object']);
+
+      $name = $items['name'];
+      $pass = md5($items['pass']);
+      $email = $items['email'];
+      $insert = "insert into users (login, pass, email, roleId)
+                  values('$name', '$pass', '$email', 2)";
+      mysql_query($insert);
+      $err = mysql_errno();
+      if(!err){
+          echo 200;
+      }
+      // TODO code...
+    }
 
 }else
     echo '<h1>Gonduras</h1>';
