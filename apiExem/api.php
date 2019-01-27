@@ -8,7 +8,7 @@ if(checkToken($_POST['token'])){
     // Country
     if($_POST['param'] == 'getCountries'){
         $items = [];
-        // TODO вернуть только те, у которых есть города.
+
         $res = mysql_query('
         select distinct c.id, c.countryName
         from countries as c
@@ -34,7 +34,7 @@ if(checkToken($_POST['token'])){
     if ($_POST['param'] == 'getCities') {
       $items = [];
       $countryName = $_POST['country'];
-      // вернуть только те, у которых есть отели.
+
       $res = mysql_query("select distinct c.id, c.cityName from cities as c
         join countries on countries.id = c.countryId
         join hotels on hotels.cityId = c.id
