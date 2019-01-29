@@ -91,4 +91,4 @@ if(checkToken($_POST['token'])){
     }
 
 }else
-    echo '<h1>Gonduras</h1>';
+    echo '<h1>Api page.</h1>';
