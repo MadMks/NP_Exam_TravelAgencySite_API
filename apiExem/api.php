@@ -89,6 +89,8 @@ if(checkToken($_POST['token'])){
       }
       // TODO code...
     }
+    // TODO Method does not exist
+    // echo 404;
 
 }else
     echo '<h1>Api page.</h1>';
