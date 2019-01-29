@@ -89,6 +89,10 @@ if(checkToken($_POST['token'])){
       }
       // TODO code...
     }
+    // TODO image for admin
+    if(true){
+
+    }
     // TODO Method does not exist
     // echo 404;
 
