@@ -74,25 +74,27 @@ if(checkToken($_POST['token'])){
     }
     // Register
     // TODO Register
-    if ($_POST['param'] == 'register') {
-      $items = json_decode($_POST['object']);
+    if ($_POST['param'] == 'regUser') {
+      // $items = json_decode($_POST['object']);
 
-      $name = $items['name'];
-      $pass = md5($items['pass']);
-      $email = $items['email'];
+      $login = $_POST['login'];
+      $pass = md5($_POST['pass']);
+      $email = $_POST['email'];
       $insert = "insert into users (login, pass, email, roleId)
-                  values('$name', '$pass', '$email', 2)";
+                  values('$login', '$pass', '$email', 2)";
       mysql_query($insert);
-      $err = mysql_errno();
-      if(!err){
-          echo 200;
-      }
-      // TODO code...
+      // $err = mysql_errno();
+      echo 200;
+      // if(!err){
+      //     echo 200;
+      // }
+      // TODO code...mysqli_errno OR PDO 
+      // echo 404;
     }
     // TODO image for admin
-    if(true){
-
-    }
+    // if(true){
+    //
+    // }
     // TODO Method does not exist
     // echo 404;
 
