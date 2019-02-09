@@ -20,15 +20,17 @@ if(checkToken($_POST['token'])){
         // file_put_contents('test.txt', json_encode($items));
         echo json_encode($items);
     }
-    if($_POST['param'] == 'insCountries'){
-        $items = json_decode($_POST['object']);
-        $c = $items['countryName'];
-        file_put_contents('test.txt', $c);
-        mysql_query("insert into countries(countryName)VALUES ('$c')");
+    if($_POST['param'] == 'addCountry'){
+        $item = json_decode($_POST['object']);
+        // $country = $item['countryName'];
+        $country = $item->countryName;
+        // file_put_contents('test.txt', $country);
+        mysql_query("insert into countries(countryName) VALUES ('$country')");
         $err = mysql_errno();
         if(!err){
-            echo 200;
+            echo 2002;
         }
+        echo 200;
     }
     // City
     if ($_POST['param'] == 'getCities') {
@@ -88,7 +90,7 @@ if(checkToken($_POST['token'])){
       // if(!err){
       //     echo 200;
       // }
-      // TODO code...mysqli_errno OR PDO 
+      // TODO code...mysqli_errno OR PDO
       // echo 404;
     }
     // TODO image for admin
