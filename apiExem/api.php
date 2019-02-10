@@ -20,6 +20,18 @@ if(checkToken($_POST['token'])){
         // file_put_contents('test.txt', json_encode($items));
         echo json_encode($items);
     }
+    if($_POST['param'] == 'getAllCountries'){
+        $items = [];
+
+        $res = mysql_query('
+        select distinct c.id, c.countryName
+        from countries as c');
+        while ($row = mysql_fetch_array($res, MYSQL_ASSOC)){
+            $items[] = new Country($row['id'], $row['countryName']);
+        }
+        // file_put_contents('test.txt', json_encode($items));
+        echo json_encode($items);
+    }
     if($_POST['param'] == 'addCountry'){
         $item = json_decode($_POST['object']);
         // $country = $item['countryName'];
@@ -44,6 +56,22 @@ if(checkToken($_POST['token'])){
 
       while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
         $items[] = new City($row['id'], $row['cityName']);
+      }
+      // file_put_contents('test2.txt', json_encode($items));
+      echo json_encode($items);
+    }
+    if ($_POST['param'] == 'getAllCities') {
+      $items = [];
+
+      $res = mysql_query("select c.id, c.cityName, countries.countryName
+        from cities as c
+        join countries on countries.id = c.countryId");
+
+      while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
+        $items[] = new City(
+          $row['id'],
+          $row['cityName'],
+          $row['countryName']);
       }
       // file_put_contents('test2.txt', json_encode($items));
       echo json_encode($items);
