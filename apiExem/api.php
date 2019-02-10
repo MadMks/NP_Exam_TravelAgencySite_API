@@ -49,13 +49,16 @@ if(checkToken($_POST['token'])){
       $items = [];
       $countryName = $_POST['country'];
 
-      $res = mysql_query("select distinct c.id, c.cityName from cities as c
+      $res = mysql_query("select distinct c.id, c.cityName,
+          countries.countryName
+        from cities as c
         join countries on countries.id = c.countryId
         join hotels on hotels.cityId = c.id
         where countries.countryName = '$countryName'");
 
       while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
-        $items[] = new City($row['id'], $row['cityName']);
+        $items[] = new City($row['id'], $row['cityName'],
+          $row['countryName']);
       }
       // file_put_contents('test2.txt', json_encode($items));
       echo json_encode($items);
@@ -83,7 +86,9 @@ if(checkToken($_POST['token'])){
         $cityName = $_POST['city'];
 
         $res = mysql_query("
-          select h.id, hotelName, stars, cost, info
+          select h.id, hotelName,
+            cities.cityName, countries.countryName,
+            stars, cost, info
           from hotels as h
           join countries on countries.id = h.countryId
           join cities on cities.id = h.cityId
@@ -94,6 +99,8 @@ if(checkToken($_POST['token'])){
           $items[] = new Hotel(
             $row['id'],
             $row['hotelName'],
+            $row['cityName'],
+            $row['countryName'],
             $row['stars'],
             $row['cost'],
             $row['info']

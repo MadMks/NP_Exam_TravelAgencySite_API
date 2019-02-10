@@ -6,6 +6,11 @@ class City
     public $cityName;
     public $countryName;
 
+    // public function __construct($id, $cityName)
+    // {
+    //     $this->id = $id;
+    //     $this->cityName = $cityName;
+    // }
     public function __construct($id, $cityName, $countryName)
     {
         $this->id = $id;
