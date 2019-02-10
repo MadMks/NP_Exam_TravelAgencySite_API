@@ -109,6 +109,31 @@ if(checkToken($_POST['token'])){
         // file_put_contents('test3.txt', json_encode($items));
         echo json_encode($items);
     }
+    if($_POST['param'] == 'getAllHotels'){
+        $items = [];
+
+        $res = mysql_query("
+          select h.id, hotelName,
+            cities.cityName, countries.countryName,
+            stars, cost, info
+          from hotels as h
+          join countries on countries.id = h.countryId
+          join cities on cities.id = h.cityId");
+
+        while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
+          $items[] = new Hotel(
+            $row['id'],
+            $row['hotelName'],
+            $row['cityName'],
+            $row['countryName'],
+            $row['stars'],
+            $row['cost'],
+            $row['info']
+          );
+        }
+        // file_put_contents('test3.txt', json_encode($items));
+        echo json_encode($items);
+    }
     // Register
     // TODO Register
     if ($_POST['param'] == 'regUser') {
