@@ -38,10 +38,10 @@ if(checkToken($_POST['token'])){
         $country = $item->countryName;
         // file_put_contents('test.txt', $country);
         mysql_query("insert into countries(countryName) VALUES ('$country')");
-        $err = mysql_errno();
-        if(!err){
-            echo 2002;
-        }
+        // $err = mysql_errno();
+        // if(!err){
+        //     echo 2002;
+        // }
         echo 200;
     }
     // City
@@ -78,6 +78,23 @@ if(checkToken($_POST['token'])){
       }
       // file_put_contents('test2.txt', json_encode($items));
       echo json_encode($items);
+    }
+    if($_POST['param'] == 'addCity'){
+        $item = json_decode($_POST['object']);
+        // $country = $item['countryName'];
+        $city = $item->cityName;
+        $country = $item->countryName;
+        // file_put_contents('test.txt', $country);
+        $res = mysql_query("select id from countries
+          where countryName = '$country'");
+        $row = mysql_fetch_array($res, MYSQL_ASSOC);
+        $countryId = $row['id'];
+        mysql_query("insert into cities(cityName, countryId)
+          VALUES ('$city', '$countryId')");
+
+        // echo $city . ' ' . $country . ' ' . $res
+        // . ' ' . $row['id'];
+        echo 200;
     }
     // Hotels
     if($_POST['param'] == 'getHotels'){
