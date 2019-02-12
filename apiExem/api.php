@@ -151,6 +151,34 @@ if(checkToken($_POST['token'])){
         // file_put_contents('test3.txt', json_encode($items));
         echo json_encode($items);
     }
+    if($_POST['param'] == 'addHotel'){
+        $item = json_decode($_POST['object']);
+
+        $hotel = $item->hotelName;
+        $city = $item->cityName;
+        $country = $item->countryName;
+        $stars = $item->stars;
+        $cost = $item->cost;
+        $info = $item->info;
+
+        $res = mysql_query("select id, countryId
+          from cities
+          where cityName = '$city'");
+        // $res = mysql_query("select id from countries
+        //   where countryName = '$country'");
+        $row = mysql_fetch_array($res, MYSQL_ASSOC);
+        $cityId = $row['id'];
+        $countryId = $row['countryId'];
+
+        mysql_query("insert into hotels
+          (hotelName, cityId, countryId, stars, cost, info)
+          VALUES
+          ('$hotel', $cityId, $countryId, $stars, $cost, '$info')");
+
+        // echo $city . ' ' . $country . ' ' . $res
+        // . ' ' . $row['id'];
+        echo 200;
+    }
     // Register
     // TODO Register
     if ($_POST['param'] == 'regUser') {
