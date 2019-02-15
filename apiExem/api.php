@@ -46,7 +46,7 @@ if(checkToken($_POST['token'])){
     }
     if($_POST['param'] == 'delCountry'){
         $countryId = $_POST['countryId'];
-        
+
         mysql_query("delete from countries
           where countries.id = '$countryId'");
 
@@ -102,6 +102,14 @@ if(checkToken($_POST['token'])){
 
         // echo $city . ' ' . $country . ' ' . $res
         // . ' ' . $row['id'];
+        echo 200;
+    }
+    if($_POST['param'] == 'delCity'){
+        $cityId = $_POST['cityId'];
+
+        mysql_query("delete from cities
+          where cities.id = '$cityId'");
+
         echo 200;
     }
     // Hotels
