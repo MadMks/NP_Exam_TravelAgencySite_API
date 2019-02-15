@@ -45,12 +45,11 @@ if(checkToken($_POST['token'])){
         echo 200;
     }
     if($_POST['param'] == 'delCountry'){
-        $item = json_decode($_POST['object']);
-        $country = $item->countryName;
-
-        mysql_query("delete from countries
-          where countries.countryName = '$country'");
+        $countryId = $_POST['countryId'];
         
+        mysql_query("delete from countries
+          where countries.id = '$countryId'");
+
         echo 200;
     }
     // City
