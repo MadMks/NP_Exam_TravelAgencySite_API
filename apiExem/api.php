@@ -195,6 +195,14 @@ if(checkToken($_POST['token'])){
         // . ' ' . $row['id'];
         echo 200;
     }
+    if($_POST['param'] == 'delHotel'){
+        $hotelId = $_POST['hotelId'];
+
+        mysql_query("delete from hotels
+          where hotels.id = '$hotelId'");
+
+        echo 200;
+    }
     // Register
     // TODO Register
     if ($_POST['param'] == 'regUser') {
