@@ -1,5 +1,4 @@
 <?php
-// include_once 'Country.php';
 require '../components/autoload.php';
 include_once '../views/functions.php';
 connect();
@@ -17,7 +16,7 @@ if(checkToken($_POST['token'])){
         while ($row = mysql_fetch_array($res, MYSQL_ASSOC)){
             $items[] = new Country($row['id'], $row['countryName']);
         }
-        // file_put_contents('test.txt', json_encode($items));
+
         echo json_encode($items);
     }
     if($_POST['param'] == 'getAllCountries'){
@@ -29,19 +28,15 @@ if(checkToken($_POST['token'])){
         while ($row = mysql_fetch_array($res, MYSQL_ASSOC)){
             $items[] = new Country($row['id'], $row['countryName']);
         }
-        // file_put_contents('test.txt', json_encode($items));
+
         echo json_encode($items);
     }
     if($_POST['param'] == 'addCountry'){
         $item = json_decode($_POST['object']);
-        // $country = $item['countryName'];
         $country = $item->countryName;
-        // file_put_contents('test.txt', $country);
+
         mysql_query("insert into countries(countryName) VALUES ('$country')");
-        // $err = mysql_errno();
-        // if(!err){
-        //     echo 2002;
-        // }
+
         echo 200;
     }
     if($_POST['param'] == 'delCountry'){
@@ -68,7 +63,7 @@ if(checkToken($_POST['token'])){
         $items[] = new City($row['id'], $row['cityName'],
           $row['countryName']);
       }
-      // file_put_contents('test2.txt', json_encode($items));
+
       echo json_encode($items);
     }
     if ($_POST['param'] == 'getAllCities') {
@@ -84,15 +79,14 @@ if(checkToken($_POST['token'])){
           $row['cityName'],
           $row['countryName']);
       }
-      // file_put_contents('test2.txt', json_encode($items));
+
       echo json_encode($items);
     }
     if($_POST['param'] == 'addCity'){
         $item = json_decode($_POST['object']);
-        // $country = $item['countryName'];
         $city = $item->cityName;
         $country = $item->countryName;
-        // file_put_contents('test.txt', $country);
+
         $res = mysql_query("select id from countries
           where countryName = '$country'");
         $row = mysql_fetch_array($res, MYSQL_ASSOC);
@@ -100,8 +94,6 @@ if(checkToken($_POST['token'])){
         mysql_query("insert into cities(cityName, countryId)
           VALUES ('$city', '$countryId')");
 
-        // echo $city . ' ' . $country . ' ' . $res
-        // . ' ' . $row['id'];
         echo 200;
     }
     if($_POST['param'] == 'delCity'){
@@ -139,7 +131,7 @@ if(checkToken($_POST['token'])){
             $row['info']
           );
         }
-        // file_put_contents('test3.txt', json_encode($items));
+
         echo json_encode($items);
     }
     if($_POST['param'] == 'getAllHotels'){
@@ -164,7 +156,7 @@ if(checkToken($_POST['token'])){
             $row['info']
           );
         }
-        // file_put_contents('test3.txt', json_encode($items));
+
         echo json_encode($items);
     }
     if($_POST['param'] == 'addHotel'){
@@ -180,8 +172,7 @@ if(checkToken($_POST['token'])){
         $res = mysql_query("select id, countryId
           from cities
           where cityName = '$city'");
-        // $res = mysql_query("select id from countries
-        //   where countryName = '$country'");
+
         $row = mysql_fetch_array($res, MYSQL_ASSOC);
         $cityId = $row['id'];
         $countryId = $row['countryId'];
@@ -191,8 +182,6 @@ if(checkToken($_POST['token'])){
           VALUES
           ('$hotel', $cityId, $countryId, $stars, $cost, '$info')");
 
-        // echo $city . ' ' . $country . ' ' . $res
-        // . ' ' . $row['id'];
         echo 200;
     }
     if($_POST['param'] == 'delHotel'){
@@ -204,30 +193,16 @@ if(checkToken($_POST['token'])){
         echo 200;
     }
     // Register
-    // TODO Register
     if ($_POST['param'] == 'regUser') {
-      // $items = json_decode($_POST['object']);
-
       $login = $_POST['login'];
       $pass = md5($_POST['pass']);
       $email = $_POST['email'];
       $insert = "insert into users (login, pass, email, roleId)
                   values('$login', '$pass', '$email', 2)";
       mysql_query($insert);
-      // $err = mysql_errno();
+
       echo 200;
-      // if(!err){
-      //     echo 200;
-      // }
-      // TODO code...mysqli_errno OR PDO
-      // echo 404;
     }
-    // TODO image for admin
-    // if(true){
-    //
-    // }
-    // TODO Method does not exist
-    // echo 404;
 
 }else
     echo '<h1>Api page.</h1>';
